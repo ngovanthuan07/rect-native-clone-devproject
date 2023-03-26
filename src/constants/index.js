@@ -1,3 +1,2 @@
-export const BASE_URL = 'http://192.168.1.6'
-
+export const BASE_URL = 'http://192.168.1.12'
 export const CURRENT_USER_POSTS_UPDATE = 'CURRENT_USER_POSTS_UPDATE'

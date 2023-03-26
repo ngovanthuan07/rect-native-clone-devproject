@@ -1,4 +1,7 @@
-import { CLEAR_MODAL, MODAL_OPEN_COMMENT_SECTION, MODAL_OPEN_HOME_PLUS_SECTION } from '../constants';
+import { CLEAR_MODAL, MODAL_OPEN_COMMENT_SECTION, 
+    MODAL_OPEN_HOME_PLUS_SECTION,
+    MODAL_OPEN_HOME_ADD_PIC_AND_VIDEO_PLUS
+} from '../constants';
 
 const initialState = {
     open: false,
@@ -13,6 +16,7 @@ export const modal = (state = initialState, action) => {
             return {
                 ...state,
                 open: action.open,
+                snapPoints: action.snapPoints,
                 data: action.data,
                 modalType: action.modalType,
             }
@@ -23,7 +27,15 @@ export const modal = (state = initialState, action) => {
                 snapPoints: action.snapPoints,
                 data: null,
                 modalType: action.modalType,
-            }    
+            }  
+        case MODAL_OPEN_HOME_ADD_PIC_AND_VIDEO_PLUS:
+            return {
+                ...state,
+                open: action.open,
+                snapPoints: action.snapPoints,
+                data: null,
+                modalType: action.modalType,
+            }  
         case CLEAR_MODAL:
             return initialState;
         default:

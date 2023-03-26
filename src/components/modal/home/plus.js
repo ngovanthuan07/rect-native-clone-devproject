@@ -19,8 +19,13 @@ export default function Plus({onClose}) {
   return (
     <ViewContainer>
       <OptionContainer>
-        <Text style={{flex: 1, textAlign: 'center', fontWeight: 'bold', marginLeft: 30}}>Options</Text>
-        <Feather name="x" size={20} color="black" style={{paddingRight: 10}} onPress={() => onClose()}/>
+        <Text style={{
+            paddingLeft: 16,
+            fontWeight: 'bold',
+            fontSize: 16,
+          }}
+        >Options</Text>
+        <Feather name="x" size={25} color="black" style={{paddingRight: 10}} onPress={() => onClose()}/>
       </OptionContainer>
       <ViewButton>
         <Button onPress={() => handleNavigation("addPictureAndVideo")}>
@@ -41,15 +46,19 @@ export default function Plus({onClose}) {
 }
 
 const ViewContainer = styled(View)`
-  flex: 0.3;
+  flex: 1;
 `
 
 const OptionContainer = styled(View)`
-  flex: 1;
+  height: 40px;
   display: flex;
   flex-direction: row;
+  background-color: white;
   justify-content: space-between;
   align-items: center;
+  border-bottom-width: 1px;
+  border-bottom-color: gray;
+  border-bottom-style: solid;
 `
 
 

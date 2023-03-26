@@ -45,14 +45,14 @@ export const updateUserProfile = async (data, avatarOld, backgroundOld) => {
     }
 
     const update = {
-        ...data,
-        avatar: avatarNewURL,
-        background: backgroundNewURL
-    }
+      ...data,
+      avatar: avatarNewURL,
+      background: backgroundNewURL,
+    };
 
     console.log(update);
-    
-    const response = await axiosClient.post('/updateProfile', update)
+
+    const response = await axiosClient.post("/updateProfile", update);
     return response;
   } catch (error) {
     return error;
@@ -89,3 +89,19 @@ export const queryUsersByField = (field, searchTerm) =>
         reject(error);
       });
   });
+
+export const getMe = async () => {
+  try {
+    const response = await axiosClient.get("/me");
+    if (response?.data?.user != null && response?.status === 200) {
+      const user = response.data.user;
+
+      return user;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.log("UserAuthStateListener Error", error);
+    return null
+  }
+};

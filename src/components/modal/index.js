@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearModal } from '../../redux/actions/modal';
 import Plus from './home/plus';
 import AddPictureAndVideo from './home/addPitureAndVideo';
+import CommentModal from './comment';
+import EmptyModal from './empty';
 
 const Modal = () => {
     const modalState = useSelector(state => state.modal);
@@ -22,9 +24,11 @@ const Modal = () => {
             case 0:
                 return (<Plus post={modalState.data} onClose={onClose} />)
             case 1:
-                return (<AddPictureAndVideo post={modalState.data} onClose={onClose} />)  
+                return (<AddPictureAndVideo post={modalState.data} onClose={onClose} />) 
+            case 2:
+                return (<CommentModal post={modalState.data} onClose={onClose}/>)  
             default:
-                return (<></>)
+                return (<EmptyModal onClose={onClose}/>)
         }
     }
     const onClose = () => {
@@ -32,18 +36,20 @@ const Modal = () => {
         dispatch(clearModal())
     }
 
+    // if(modalState.snapPoints.length === 0)  {
+    //     return <></>
+    // }
+
     return (
         <BottomSheet
             ref={bottomSheetRef}
-            snapPoints={modalState.snapPoints.length > 0 ? modalState.snapPoints : ["1%"]}
+            snapPoints={modalState.snapPoints.length !== 0 ? modalState.snapPoints : ["50%"]}
             index={-1}
-            // onClose={onClose}
+            onClose={onClose}
             handleHeight={40}
             enablePanDownToClose>
             {renderContent()}
         </BottomSheet>
-       
-       
     )
 }
 

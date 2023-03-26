@@ -14,9 +14,20 @@ import styles from './styles';
 
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet"
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {openHomePlusModal} from '../../redux/actions/modal'
+import Modal from './../../components/modal/index';
+import NavbarCommon from '../../components/navBar'
+import Info from '../../components/home/info'
+// import { Tab, TabView } from 'react-native-elements';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import TabLeft from './../../components/home/tab/tabLeft/index';
+import TabRight from './../../components/home/tab/tabRight/index';
+import {displayUserPosts} from './../../redux/actions/post';
+
+const Tab = createMaterialTopTabNavigator();
+
 
 
 export default function HomeScreen() {
@@ -30,10 +41,19 @@ export default function HomeScreen() {
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back)
   const [cameraFlash, setCameraFlash] = useState(Camera.Constants.FlashMode.off)
 
+
   const [isCameraReady, setIsCameraReady] = useState(false)
   const isFocused = useIsFocused()
 
+  const [_tab, _setTab] = useState('LEFT')
+ 
+
   const navigation = useNavigation()
+
+  const currentUser = useSelector(state => state.auth.currentUser);
+
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
       (async () => {
@@ -53,17 +73,66 @@ export default function HomeScreen() {
       })()
   }, [])
 
-  const bottomSheetRef = useRef(null)
-  const [isOpen, setIsOpen] = useState(false)
-
-
-
-  const dispatch = useDispatch()
-
+  useEffect(() => {
+    if(_tab === 'LEFT') {
+      dispatch(displayUserPosts())
+    }
+  }, [_tab])
+ 
 
   return (
     // onPress={() => navigation.navigate('addPictureAndVideo')}
     <SafeAreaView style={styles.container}>
+      <NavbarCommon iconRight={
+            {
+              cart: true,
+              heart: true,
+              share: true,
+              notification: true
+            }}
+      />
+      <Info user={currentUser}/>
+
+
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Screen1"
+          component={TabLeft}
+          options={{
+            headerShown: false,
+            tabBarLabel: () => null,
+            tabBarIcon: ({ color }) => (
+              <Feather name="grid" size={24} color="gray" />
+            ),
+          }}
+          listeners={({ navigation, route }) => ({
+            tabPress: (e) => {
+              // e.preventDefault();
+              _setTab('LEFT')
+            },
+          })}
+        />
+        <Tab.Screen
+          name="Screen2"
+          component={TabRight}
+          options={{
+            headerShown: false,
+            tabBarLabel: () => null,
+            tabBarIcon: ({ color }) => (
+              <Feather name="info" size={24} color="gray" />
+            ),
+          }}
+          listeners={({ navigation, route }) => ({
+            tabPress: (e) => {
+              // e.preventDefault();
+              _setTab('RIGHT')
+            },
+          })}
+        />
+    </Tab.Navigator>
+
+      
+
       <TouchableOpacity style={styles.button} onPress={() => dispatch(openHomePlusModal(true, ["40%"]))}>
         <AntDesign name="plus" size={24} color="white" />
       </TouchableOpacity>

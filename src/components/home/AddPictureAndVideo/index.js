@@ -3,20 +3,29 @@ import React from 'react'
 import styled from 'styled-components';
 import { TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons'; 
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { openHomeAddPicAndVideoModal } from '../../../redux/actions/modal';
+import { removePicAndVideoStorage } from '../../../redux/actions/storage';
 
-export default function  ListPictureAndVideo({type}) {
+export default function  ListPictureAndVideo({item,type, handPressItem}) {
+  const navigation = useNavigation();
+  const dispatch = useDispatch()
+
 
   if(type === 'plus') {
     return (
-      <Plus>
+      <Plus onPress={() => dispatch(openHomeAddPicAndVideoModal(true, ["25%"]))}>
         <Feather name="plus-circle" size={50} color="#ED4C67" />
     </Plus>
     )
   }
+
+
  
   return (
-    <Container>
-      <Image />
+    <Container onPress={() => handPressItem(item.id)}>
+      <Avatar source={{ uri: item.uri }}/>
     </Container>
   )
 }
@@ -37,4 +46,9 @@ const Container = styled(TouchableOpacity)`
   height: 100px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.1);
+`
+const Avatar = styled(Image)`
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
 `
