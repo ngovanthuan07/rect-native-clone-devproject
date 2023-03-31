@@ -8,14 +8,14 @@ import { useNavigation } from '@react-navigation/native';
 export default function ProfileNavbar() {
   const navigation = useNavigation()
   return (
-    <View>
+    <View >
       <Header
         containerStyle={{ backgroundColor: 'rgb(235, 237, 240)' }}
 
         leftComponent={
           <View style={styles.leftComponentView}>
             <Ionicons name="ios-chevron-back-outline" size={24} color="#ED4C67" onPress={() => navigation.goBack()}/>
-            <Text style={styles.leftComponentText}>Edit Profile</Text>
+            <Text style={styles.leftComponentText}>Edit</Text>
           </View>}
 
         leftContainerStyle={{ flex: 2 }}

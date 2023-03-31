@@ -20,6 +20,7 @@ import {openHomePlusModal} from '../../../redux/actions/modal'
 import { removePicAndVideoStorage } from "../../../redux/actions/storage";
 import { createPicAndVideoHome } from "../../../services/post";
 import { async } from '@firebase/util';
+import { Header001 } from "../../../components/common";
 
 export default function AddPictureAndVideoScreen() {
   const [todo, setTodo] = useState([1,2,3])
@@ -58,15 +59,18 @@ export default function AddPictureAndVideoScreen() {
   const navigation = useNavigation();
   return (
       <Container>
-      <Header>
-        <Ionicons
-          name="ios-chevron-back-outline"
-          size={30}
-          color="#ED4C67"
-          onPress={() => navigation.goBack()}
+        <Header001 
+            css={{
+              heightContainer: '40px',
+              backgroundColor: 'rgba(0, 0, 0, 0.1)'
+            }}
+            left= {{
+                title: 'Add Pic And Video',
+                textSite: '15px',
+                back: true
+            }}
+
         />
-        <HeaderText>Edit Profile</HeaderText>
-      </Header>
       <Description  placeholder="Say something" editable multiline numberOfLines={4} onChangeText={setName}/>
       <Category placeholder="Category"  onChangeText={setCategory}/>
       <SafeAreaView style={{flex:1, marginHorizontal: 10, flexDirection: 'row', flexWrap: 'wrap',}}>
@@ -130,7 +134,7 @@ export default function AddPictureAndVideoScreen() {
 
 const Container = styled(View)`
   flex: 1;
-  padding-top: 5px;
+  
 `;
 const Header = styled(TouchableOpacity)`
   padding: 10px 0px 10px 0px;

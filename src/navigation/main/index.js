@@ -12,6 +12,7 @@ import AddPictureAndVideoScreen from '../../screens/home/addPicAndVideo'
 import Modal from '../../components/modal'
 import CustomVideoPlayer from './../../components/general/index';
 import HomeSliderScreen from './../../screens/slider/home/index';
+import AddProductScreen from '../../screens/home/addProduct'
 
 const Stack = createNativeStackNavigator()
 
@@ -42,6 +43,7 @@ export default function Route() {
             <Stack.Screen name="addPictureAndVideo" component={AddPictureAndVideoScreen} options={{ headerShown: false }} />
             <Stack.Screen name="videoTest" component={CustomVideoPlayer} options={{ headerShown: false }} />
             <Stack.Screen name="homeSliderScreen" component={HomeSliderScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="addProduct" component={AddProductScreen} options={{ headerShown: false }} />
           </>
        }
         </Stack.Navigator>

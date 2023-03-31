@@ -7,6 +7,22 @@ const buttonStyles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 30
     },
+    grayPinkButton: {
+        backgroundColor: '#ED4C67',
+        borderRadius: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    grayGreenButton: {
+        backgroundColor: '#27ae60',
+        borderRadius: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
     grayOutlinedIconButton: {
         borderColor: 'lightgray',
         borderWidth: 1,

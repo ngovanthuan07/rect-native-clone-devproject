@@ -25,6 +25,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import TabLeft from './../../components/home/tab/tabLeft/index';
 import TabRight from './../../components/home/tab/tabRight/index';
 import {displayUserPosts} from './../../redux/actions/post';
+import { Header001 } from '../../components/common'
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -83,13 +84,22 @@ export default function HomeScreen() {
   return (
     // onPress={() => navigation.navigate('addPictureAndVideo')}
     <SafeAreaView style={styles.container}>
-      <NavbarCommon iconRight={
-            {
-              cart: true,
-              heart: true,
-              share: true,
-              notification: true
-            }}
+      <Header001 
+          css={{
+            heightContainer: '50px',
+            backgroundColor: 'white'
+          }}
+          left= {{
+              title: '',
+              textSite: '15px',
+          }}
+          right= {{
+            share: true,
+            heath: true,
+            cart: true,
+            notification: true
+          }}
+
       />
       <Info user={currentUser}/>
 

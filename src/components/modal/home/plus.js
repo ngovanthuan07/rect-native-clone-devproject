@@ -12,7 +12,7 @@ export default function Plus({onClose}) {
 
   const handleNavigation = (nav) => {
     onClose()
-    navigation.navigate("addPictureAndVideo")
+    navigation.navigate(nav)
   }
 
 
@@ -37,7 +37,7 @@ export default function Plus({onClose}) {
         <Button>
           <Text>Choose Products</Text>
         </Button>
-        <Button>
+        <Button  onPress={() => handleNavigation("addProduct")}>
           <Text>Add Product</Text>
         </Button>
       </ViewButton>
