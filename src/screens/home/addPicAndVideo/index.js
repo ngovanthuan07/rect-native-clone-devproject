@@ -8,6 +8,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  Alert
 } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
@@ -21,6 +22,8 @@ import { removePicAndVideoStorage } from "../../../redux/actions/storage";
 import { createPicAndVideoHome } from "../../../services/post";
 import { async } from '@firebase/util';
 import { Header001 } from "../../../components/common";
+import Spinner from 'react-native-loading-spinner-overlay';
+
 
 export default function AddPictureAndVideoScreen() {
   const [todo, setTodo] = useState([1,2,3])
@@ -29,6 +32,7 @@ export default function AddPictureAndVideoScreen() {
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [watch, setWatch] = useState('EVERYONE')
+  const [loading, setLoading] = useState(false);
 
 
   const dispatch = useDispatch()
@@ -42,23 +46,50 @@ export default function AddPictureAndVideoScreen() {
   }
 
   const handlePost = async () => {
+    setLoading(true)
+
     const response = await createPicAndVideoHome({
       assets: assets,
       name: name,
       category: category,
       watch: watch,
     })
+    setLoading(false)
 
     if(response?.data) {
-      console.log("successfully ")
+      Alert.alert(
+        'Success',
+        'Upload Pic And Video Successfully',
+        [
+          {
+            text: 'OK',
+            onPress: () => navigation.navigate("home"),
+          },
+        ],
+        { cancelable: false }
+      );
     } else {
-      console.log(response);
+        Alert.alert(
+          'Error',
+          'Upload Pic And Video Error',
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log("error"),
+            },
+          ],
+          { cancelable: false }
+        );
     }
   }
 
   const navigation = useNavigation();
   return (
       <Container>
+        <Spinner
+          visible={loading}
+          textStyle={{color: '#FFF',}}
+        />
         <Header001 
             css={{
               heightContainer: '40px',

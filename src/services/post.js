@@ -34,6 +34,36 @@ export const createPicAndVideoHome = async (data) => {
   }
 };
 
+export const addProduct = async (data) => {
+  let assets = [];
+
+  try {
+    for (let item of data["assets"]) {
+      if (item["type"] === "image") {
+        assets.push({
+          uri: await saveMediaToStorage(item["uri"], "/images"),
+          type: item["type"],
+        });
+      } else {
+        if (item["type"] === "video") {
+          assets.push({
+            uri: await saveMediaToStorage(item["uri"], "/videos"),
+            type: item["type"],
+          });
+        }
+      }
+    }
+
+    const response = await axiosClient.post("/addProduct", {
+      ...data,
+      assets,
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const checkLikePost = async (postId) => {
   try {
     const response = await axiosClient.post("/like", {
@@ -100,3 +130,14 @@ export const displayUserPosts = async (data) => {
     return error;
   }
 };
+
+
+export const searchPost = (searchable) => new Promise((resolve, reject) => {
+  axiosClient.get(`/searchPosts/${searchable}`)
+  .then((response) => {
+      resolve(response);
+  })
+  .catch((error) => {
+      reject(error);
+  })
+})

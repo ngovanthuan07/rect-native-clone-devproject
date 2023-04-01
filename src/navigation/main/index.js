@@ -13,6 +13,8 @@ import Modal from '../../components/modal'
 import CustomVideoPlayer from './../../components/general/index';
 import HomeSliderScreen from './../../screens/slider/home/index';
 import AddProductScreen from '../../screens/home/addProduct'
+import AddProductNext from '../../screens/home/addProduct/next'
+import ProductSearchDetail from '../../screens/product/detail'
 
 const Stack = createNativeStackNavigator()
 
@@ -44,6 +46,9 @@ export default function Route() {
             <Stack.Screen name="videoTest" component={CustomVideoPlayer} options={{ headerShown: false }} />
             <Stack.Screen name="homeSliderScreen" component={HomeSliderScreen} options={{ headerShown: false }} />
             <Stack.Screen name="addProduct" component={AddProductScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="addProductNext" component={AddProductNext} options={{ headerShown: false }} />
+            <Stack.Screen name="productSearchDetail" component={ProductSearchDetail} options={{ headerShown: false }} />
+
           </>
        }
         </Stack.Navigator>

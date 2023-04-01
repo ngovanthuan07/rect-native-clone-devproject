@@ -28,7 +28,7 @@ export default function AddProductScreen() {
 
   // public search able
   const [publicSearchable, setPublicSearchable] = useState(false);
-  const toggleSwitchPublicSearchable = () => setPublicSearchable((previousState) => !previousState);
+    const toggleSwitchPublicSearchable = () => setPublicSearchable((previousState) => !previousState);
 
   // Dangerous Goods
   const [dangerousGood, setDangerousGood] = useState(false);
@@ -75,13 +75,16 @@ export default function AddProductScreen() {
       currency: selectedCurrency,
       pricing: price,
       discount: 0,
-      quantity: 0,
+      quantity: 1,
       stock: stock,
       views: 0,
-      assets: [image],
+      assets: [{
+        uri: image,
+        type: 'image',
+      }],
       choose: 'PRODUCT',
     }
-    console.log(data);
+    navigation.navigate("addProductNext", {data: data})
   }
 
   return (

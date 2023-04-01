@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  Alert
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -35,6 +36,7 @@ import { updateUserProfile } from "../../../../services/user";
 import { async } from "@firebase/util";
 import { useDispatch } from 'react-redux';
 import { userAuthStateListener } from './../../../../redux/actions/auth';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default function UpdateProfile({user}) {
@@ -50,6 +52,7 @@ export default function UpdateProfile({user}) {
 
   const [avatarOld, setAvatarOld] = useState(user.avatar);
   const [backgroundOld, setBackgroundOld] = useState(user.background);
+  const [loading, setLoading] = useState(false);
 
 
   const chooseImage = async (type='avatar') => {
@@ -93,11 +96,36 @@ export default function UpdateProfile({user}) {
       avatar: avatar,
       background: background
     }
+    setLoading(true);
     let response = await updateUserProfile(data, user.avatar, user.background)
-    
-    if(response) {
-      console.log(response.data.user);
+    setLoading(false);
+
+    if(response?.data) {
+      Alert.alert(
+        'Success',
+        'Upload Profile Successfully',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log("success"),
+          },
+        ],
+        { cancelable: false }
+      );
       dispatch(userAuthStateListener())
+      
+    } else {
+      Alert.alert(
+        'Error',
+        'Upload Profile Error',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log("error"),
+          },
+        ],
+        { cancelable: false }
+      );
     }
 
 
@@ -105,6 +133,11 @@ export default function UpdateProfile({user}) {
 
   return (
     <ScrollView>
+      <Spinner
+          visible={loading}
+         
+          textStyle={{color: '#FFF',}}
+      />
       <Page>
         <AvatarViewContainer>
           <AvatarTouchableOpacityContainer onPress={() => chooseImage()}>
