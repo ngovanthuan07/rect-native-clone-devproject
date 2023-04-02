@@ -10,6 +10,8 @@ import Header001 from './../../../components/common/header_0001/index';
 import { TextInput } from "react-native";
 import inputStyles from './../../../styles/inputStyles';
 import { addToCart } from "../../../services/cart";
+import { useDispatch } from "react-redux";
+import { loadCartDetail } from "../../../redux/actions/cart";
 
 
 const { height, width } = Dimensions.get("window");
@@ -17,6 +19,7 @@ export default function ProductSearchDetail({route}) {
   const post = route.params.data
   const navigation = useNavigation()
   const [quantity, setQuantity] = useState(1)
+  const dispatch = useDispatch()
 
   const handlePlus = () => {
     if(quantity === post.quantity) {
@@ -65,6 +68,8 @@ export default function ProductSearchDetail({route}) {
         { cancelable: false }
       );
     }
+
+    dispatch(loadCartDetail())
 
   }
 

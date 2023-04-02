@@ -15,3 +15,13 @@ export const addToCart = async (postId, quantity) => {
       return error;
     }
   };
+export const removeCart = async (cartId) => {
+  try {
+    const response = await axiosClient.post("/removeCartDetail", {
+      id: cartId
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

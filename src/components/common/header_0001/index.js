@@ -5,6 +5,8 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 import styles from "./styles";
 import styled from "styled-components";
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from "react-redux";
+import { loadCartDetail } from './../../../redux/actions/cart';
 
 
 export default function Header001({
@@ -24,7 +26,12 @@ export default function Header001({
   }
 }) {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
+  const handleCart = async () => {
+    await dispatch(loadCartDetail())
+    navigation.navigate("cart")
+  }
 
   return (
     <Box backgroundColor={css.backgroundColor} heightContainer={css.heightContainer}>
@@ -60,7 +67,7 @@ export default function Header001({
 
           {
             right?.cart ?
-              <Feather name="shopping-cart" size={24} color="black" style={{paddingLeft: 10}}/>
+              <Feather name="shopping-cart" size={24} color="black" style={{paddingLeft: 10}} onPress={() => handleCart()}/>
             : null
           }
 

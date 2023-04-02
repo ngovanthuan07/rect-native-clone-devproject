@@ -15,6 +15,7 @@ import HomeSliderScreen from './../../screens/slider/home/index';
 import AddProductScreen from '../../screens/home/addProduct'
 import AddProductNext from '../../screens/home/addProduct/next'
 import ProductSearchDetail from '../../screens/product/detail'
+import Cart from '../../screens/cart'
 
 const Stack = createNativeStackNavigator()
 
@@ -48,6 +49,7 @@ export default function Route() {
             <Stack.Screen name="addProduct" component={AddProductScreen} options={{ headerShown: false }} />
             <Stack.Screen name="addProductNext" component={AddProductNext} options={{ headerShown: false }} />
             <Stack.Screen name="productSearchDetail" component={ProductSearchDetail} options={{ headerShown: false }} />
+            <Stack.Screen name="cart" component={Cart} options={{ headerShown: false }} />
 
           </>
        }

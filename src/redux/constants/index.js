@@ -16,3 +16,5 @@ export const CLEAR_ALL_PIC_AND_VIDEO = "CLEAR_ALL_PIC_AND_VIDEO";
 
 export const DISPLAY_USER_POST = "DISPLAY_USER_POST";
 
+export const CART = "CART";
+
