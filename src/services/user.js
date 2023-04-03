@@ -75,20 +75,19 @@ export const saveUserField = (field, value) =>
       });
   });
 
-export const queryUsersByField = (field, searchTerm) =>
-  new Promise((resolve, reject) => {
-    axiosClient
-      .post("/searchTerm", {
-        field: field,
-        searchTerm: searchTerm,
-      })
-      .then((response) => {
-        resolve(response);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+export const queryUsersByField = async (field, searchTerm) => {
+  try {
+    const response = await axiosClient.post("/searchUserByField", {
+      field: field,
+      searchTerm: searchTerm
+    });
+    
+    return response?.data?.users ?? [];
+  } catch (error) {
+    console.log("Search Error", error);
+    return []
+  }
+}
 
 export const getMe = async () => {
   try {

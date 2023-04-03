@@ -5,7 +5,7 @@ export default function MemberItem({item}) {
   console.log(item)
   return (
     <View style={styles.container} key={item?.id}>
-       <Image style={styles.image} source={{uri: item?.user?.avatar ?? null}}/>
+       <Image style={styles.image} source={{uri: item?.user?.avatar ? item?.user?.avatar : null}}/>
        <Text>{item?.user?.name}</Text>
     </View>
   )

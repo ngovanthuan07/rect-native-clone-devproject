@@ -84,7 +84,7 @@ export default function RoomDetail({ route }) {
         <TouchableOpacity style={buttonStyles.grayGreenButton}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Lever Room</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={buttonStyles.grayPinkButton}>
+        <TouchableOpacity style={buttonStyles.grayPinkButton} onPress={() => navigation.navigate("addMember", {data: {roomId: room.id}})}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Add Member</Text>
         </TouchableOpacity>
       </View>
