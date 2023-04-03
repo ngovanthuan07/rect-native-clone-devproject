@@ -18,3 +18,7 @@ export const DISPLAY_USER_POST = "DISPLAY_USER_POST";
 
 export const CART = "CART";
 
+export const LOADING = "LOADING";
+
+export const LOAD_ROOM = "LOAD_ROOM";
+export const LOAD_ROOM_ID = "LOAD_ROOM_ID";

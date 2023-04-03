@@ -14,24 +14,19 @@ import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons, Feather  } from "@expo/vector-icons";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ListPictureAndVideo from './../../../components/home/AddPictureAndVideo';
-import { CheckBox, ListItem } from 'react-native-elements';
+import ListPictureAndVideo from './../../../../components/home/AddPictureAndVideo';
 import { useDispatch, useSelector } from 'react-redux';
-import {openHomePlusModal} from '../../../redux/actions/modal'
-import { removePicAndVideoStorage } from "../../../redux/actions/storage";
-import { createPicAndVideoHome } from "../../../services/post";
-import { async } from '@firebase/util';
-import { Header001 } from "../../../components/common";
+import { removePicAndVideoStorage } from "../../../../redux/actions/storage";
+import { createPicAndVideoRoom } from "../../../../services/post";
+import { Header001 } from "../../../../components/common";
 import Spinner from 'react-native-loading-spinner-overlay';
 
 
-export default function AddPictureAndVideoScreen() {
-  const [todo, setTodo] = useState([1,2,3])
+export default function AddPictureAndVideoRoomScreen({route}) {
+  let roomId = route.params.id
   const assets = useSelector(state => state.storage.data)
   const [asset, setAsset] = useState(null)
   const [name, setName] = useState('')
-  const [category, setCategory] = useState('')
-  const [watch, setWatch] = useState('EVERYONE')
   const [loading, setLoading] = useState(false);
 
 
@@ -48,11 +43,11 @@ export default function AddPictureAndVideoScreen() {
   const handlePost = async () => {
     setLoading(true)
 
-    const response = await createPicAndVideoHome({
+    const response = await createPicAndVideoRoom({
       assets: assets,
       name: name,
-      category: category,
-      watch: watch,
+      watch: "ROOM",
+      roomId: roomId
     })
     setLoading(false)
 
@@ -103,7 +98,6 @@ export default function AddPictureAndVideoScreen() {
 
         />
       <Description  placeholder="Say something" editable multiline numberOfLines={4} onChangeText={setName}/>
-      <Category placeholder="Category"  onChangeText={setCategory}/>
       <SafeAreaView style={{flex:1, marginHorizontal: 10, flexDirection: 'row', flexWrap: 'wrap',}}>
           {
             assets.map(item => (
@@ -128,30 +122,7 @@ export default function AddPictureAndVideoScreen() {
 
         <CheckBoxAndButtonContainer>
           <CheckBoxContainer>
-            <CheckBox
-              title="Everyone"
-              checkedIcon="dot-circle-o"
-              checkedColor="#ED4C67"
-              checked={watch === 'EVERYONE'}
-              onPress={() => setWatch('EVERYONE')}
-              value="EVERYONE"
-            />
-          <CheckBox
-              title="Following"
-              checkedIcon="dot-circle-o"
-              checkedColor="#ED4C67"
-              checked={watch === 'FOLLOWING'}
-              onPress={() => setWatch('FOLLOWING')}
-              value="FOLLOWING"
-            />
-            <CheckBox
-              title="Private"
-              checkedIcon="dot-circle-o"
-              checkedColor="#ED4C67"
-              checked={watch === 'PRIVATE'}
-              onPress={() => setWatch('PRIVATE')}
-              value="PRIVATE"
-          />
+            
           </CheckBoxContainer>
 
             <ButtonPost  onPress={() => handlePost()}>
@@ -186,13 +157,6 @@ const Description = styled(TextInput)`
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
 `;
-const Category = styled(TextInput)`
-  margin: 10px 0px 10px 10px;
-  padding: 10px 0px 10px 10px;
-  width: 90%;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-`;
 
 const RemoverContainer = styled(View)`
     margin: 140px 0px 0px 13px;
@@ -221,7 +185,7 @@ const CheckBoxContainer = styled(View)`
 
 
 const ButtonPost = styled(TouchableOpacity)`
-    padding: 10px 60px 10px 60px;
+    padding: 60px 60px 60px 60px;
     background-color: #ED4C67;
     border-radius: 10px;
     justify-content: center;

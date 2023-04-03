@@ -27,6 +27,11 @@ export const Avatar = styled(Image)`
   width: 100px;
   position: absolute;
 `;
+export const Avatar_001 = styled(Image)`
+  height: 100px;
+  width: 100px;
+  position: absolute;
+`;
 
 export const AvatarOverLay = styled(View)`
   background-color: rgba(0, 0, 0, 0.5);

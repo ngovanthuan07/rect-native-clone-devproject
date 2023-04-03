@@ -5,6 +5,7 @@ import { Feather, FontAwesome, Fontisto  } from "@expo/vector-icons";
 import HomeScreen from "../../screens/home";
 import AccountScreen from "../../screens/account";
 import Search from "../../screens/search";
+import RoomScreen from "../../screens/room";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -39,7 +40,7 @@ export default function HomeNavigation() {
       />
       <Tab.Screen
         name="Room"
-        component={EmptyScreen}
+        component={RoomScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Fontisto name="persons" size={24} color={ color } />

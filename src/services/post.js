@@ -34,6 +34,36 @@ export const createPicAndVideoHome = async (data) => {
   }
 };
 
+export const createPicAndVideoRoom = async (data) => {
+  let assets = [];
+
+  try {
+    for (let item of data["assets"]) {
+      if (item["type"] === "image") {
+        assets.push({
+          uri: await saveMediaToStorage(item["uri"], "/images"),
+          type: item["type"],
+        });
+      } else {
+        if (item["type"] === "video") {
+          assets.push({
+            uri: await saveMediaToStorage(item["uri"], "/videos"),
+            type: item["type"],
+          });
+        }
+      }
+    }
+
+    const response = await axiosClient.post("/createPostRoom", {
+      ...data,
+      assets,
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const addProduct = async (data) => {
   let assets = [];
 
@@ -63,6 +93,8 @@ export const addProduct = async (data) => {
     return error;
   }
 };
+
+
 
 export const checkLikePost = async (postId) => {
   try {

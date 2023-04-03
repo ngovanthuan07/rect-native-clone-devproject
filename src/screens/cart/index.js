@@ -13,7 +13,10 @@ import { TouchableOpacity } from "react-native";
 
 export default function Cart() {
   const cartDetails = useSelector((state) => state.cart.cartDetails);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(
+    
+    
+  );
 
   const dispatch = useDispatch();
 

@@ -2,15 +2,14 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import styles from './styles'
 import { TouchableOpacity, Image } from 'react-native';
-import { AvatarOverLay } from './../../account/profile/content/styles';
-export default function Info({user}) {
+export default function Info({room}) {
   return (
     <View style={styles.container}>
       <View style={styles.containerBackground}>
-        <Image style={styles.background} source={{uri: user?.background}}/>
+        <Image style={styles.background} source={{uri: room?.background}}/>
         <View style={styles.containerImage}>
-          <Image  style={styles.image} source={{uri: user?.avatar}}/>
-         <Text style={styles.textUserName}>{user?.name}</Text>
+          <Image  style={styles.image} source={{uri: room?.image}}/>
+         <Text style={styles.textUserName}>{room?.name}</Text>
         </View>
       </View>
      <View style={styles.bottomContainer}>
