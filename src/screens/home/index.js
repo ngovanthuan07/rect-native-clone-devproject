@@ -24,8 +24,10 @@ import Info from '../../components/home/info'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import TabLeft from './../../components/home/tab/tabLeft/index';
 import TabRight from './../../components/home/tab/tabRight/index';
-import {displayUserPosts} from './../../redux/actions/post';
+import {displayPosts, displayUserPostAndProduct} from '../../redux/actions/postAndProduct';
 import { Header001 } from '../../components/common'
+import uuid from 'react-native-uuid';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -41,6 +43,7 @@ export default function HomeScreen() {
   const [cameraRef, setCameraRef] = useState(null)
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back)
   const [cameraFlash, setCameraFlash] = useState(Camera.Constants.FlashMode.off)
+  const [loading, setLoading] = useState(false);
 
 
   const [isCameraReady, setIsCameraReady] = useState(false)
@@ -75,15 +78,26 @@ export default function HomeScreen() {
   }, [])
 
   useEffect(() => {
-    if(_tab === 'LEFT') {
-      dispatch(displayUserPosts())
-    }
+    (async () => {
+      setLoading(true)
+      if(_tab === 'LEFT') {
+        await dispatch(displayPosts())
+      }
+      if(_tab === 'RIGHT') {
+        await dispatch(displayUserPostAndProduct())
+      }
+      setLoading(false)
+    })()
   }, [_tab])
  
 
   return (
     // onPress={() => navigation.navigate('addPictureAndVideo')}
     <SafeAreaView style={styles.container}>
+      <Spinner
+          visible={loading}
+          textStyle={{color: '#FFF'}}
+      />
       <Header001 
           css={{
             heightContainer: '50px',

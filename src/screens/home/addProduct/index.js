@@ -1,19 +1,25 @@
-import { View, Text, TextInput, Image, Switch, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  Switch,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { Header001 } from "../../../components/common";
 import { Dimensions } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { buttonStyles, generalStyles, inputStyles } from "./../../../styles";
 import { ScrollView } from "react-native";
-import * as ImagePicker from 'expo-image-picker'
-import { useNavigation } from '@react-navigation/native';
-
+import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("window");
 
 export default function AddProductScreen() {
   //product name
-  const [productName, setProductName] = useState("")
+  const [productName, setProductName] = useState("");
 
   // description
   const [description, setDescription] = useState("");
@@ -24,53 +30,57 @@ export default function AddProductScreen() {
   // dropdown product category
   const [selectedProductCategory, setSelectedProductCategory] = useState("");
 
-  
-
   // public search able
   const [publicSearchable, setPublicSearchable] = useState(false);
-    const toggleSwitchPublicSearchable = () => setPublicSearchable((previousState) => !previousState);
+  const toggleSwitchPublicSearchable = () =>
+    setPublicSearchable((previousState) => !previousState);
+
+  // Show Live Stream
+  const [showLiveSteam, setShowLiveSteam] = useState(false);
+  const toggleSwitchLiveSteam = () =>
+    setShowLiveSteam((previousState) => !previousState);
 
   // Dangerous Goods
   const [dangerousGood, setDangerousGood] = useState(false);
-  const toggleSwitchDangerousGood= () => setDangerousGood((previousState) => !previousState);
+  const toggleSwitchDangerousGood = () =>
+    setDangerousGood((previousState) => !previousState);
 
   // currency
-  const [selectedCurrency, setSelectedCurrency] = useState('$');
+  const [selectedCurrency, setSelectedCurrency] = useState("$");
 
   //pricing
-  const [price, setPrice] = useState('')
+  const [price, setPrice] = useState("");
 
   // stock
-  const [stock, setStock] = useState('');
+  const [stock, setStock] = useState("");
 
   // image
   const [image, setImage] = useState(null);
   const chooseImage = async () => {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1
-    })
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
     if (!result.canceled) {
-      await setImage(result.assets[0].uri)
+      await setImage(result.assets[0].uri);
     }
-  }
+  };
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const handleCancel = () => {
-
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
 
   const handleNext = () => {
     const data = {
       name: productName,
       category: selectedProductCategory,
       description: description,
-      watch: 'EVERYTHING',
       public_searchable: publicSearchable,
+      show_product_in_live: showLiveSteam,
       dangerous_goods: dangerousGood,
       currency: selectedCurrency,
       pricing: price,
@@ -78,14 +88,11 @@ export default function AddProductScreen() {
       quantity: 1,
       stock: stock,
       views: 0,
-      assets: [{
-        uri: image,
-        type: 'image',
-      }],
-      choose: 'PRODUCT',
-    }
-    navigation.navigate("addProductNext", {data: data})
-  }
+      image: image,
+      choose: "PRODUCT",
+    };
+    navigation.navigate("addProductNext", { data: data });
+  };
 
   return (
     <ScrollView
@@ -106,7 +113,7 @@ export default function AddProductScreen() {
           back: true,
         }}
       />
-  
+
       <View
         style={{
           marginHorizontal: 20,
@@ -120,7 +127,6 @@ export default function AddProductScreen() {
             </Text>
           </View>
           <View
-         
             style={{
               flexDirection: "row",
               justifyContent: "center",
@@ -128,7 +134,7 @@ export default function AddProductScreen() {
             }}
           >
             <TouchableOpacity
-               onPress={() => chooseImage()}
+              onPress={() => chooseImage()}
               style={{
                 width: 80,
                 height: 30,
@@ -160,15 +166,17 @@ export default function AddProductScreen() {
               borderRadius: 10,
             }}
           >
-            <Image style={{
-                width: '100%',
-                height: '100%',
-              
-              }} source={{ uri: (image ? image : null) }}/>
+            <Image
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              source={{ uri: image ? image : null }}
+            />
           </View>
         </View>
 
-      {/* Product Name */}
+        {/* Product Name */}
         <View style={{ marginTop: 20 }}>
           <View>
             <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
@@ -177,15 +185,16 @@ export default function AddProductScreen() {
           </View>
 
           <View>
-            <TextInput 
-              editable 
+            <TextInput
+              editable
               value={productName}
-              style={inputStyles.input} 
-              onChangeText={setProductName}/>
+              style={inputStyles.input}
+              onChangeText={setProductName}
+            />
           </View>
         </View>
 
-        {/* Product Category */}    
+        {/* Product Category */}
         <View style={{ marginTop: 20 }}>
           <View>
             <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
@@ -229,10 +238,12 @@ export default function AddProductScreen() {
         </View>
 
         {/* Public Searchable */}
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
           <View style={{ marginTop: 20 }}>
             <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
               Public Searchable
@@ -249,11 +260,36 @@ export default function AddProductScreen() {
           </View>
         </View>
 
+        {/* Show LiveSteam */}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ marginTop: 20 }}>
+            <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
+              Show LiveSteam
+            </Text>
+          </View>
+          <View>
+            <Switch
+              trackColor={{ false: "#767577", true: "#ED4C67" }}
+              thumbColor={showLiveSteam ? "#f4f3f4" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitchLiveSteam}
+              value={showLiveSteam}
+            />
+          </View>
+        </View>
+
         {/* Dangerous Good */}
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
           <View style={{ marginTop: 20 }}>
             <Text style={{ fontWeight: "bold", marginBottom: 10 }}>
               Dangerous Good
@@ -300,44 +336,56 @@ export default function AddProductScreen() {
           </View>
 
           <View>
-            <TextInput 
-              editable  
-              style={inputStyles.input} 
+            <TextInput
+              editable
+              style={inputStyles.input}
               value={price}
-              onChangeText={setPrice}/>
+              onChangeText={setPrice}
+            />
           </View>
         </View>
-        
-         {/* Stock */}
-         <View style={{ marginTop: 20 }}>
+
+        {/* Stock */}
+        <View style={{ marginTop: 20 }}>
           <View>
-            <Text  style={{ fontWeight: "bold", marginBottom: 10 }}>
-              Stock
-            </Text>
+            <Text style={{ fontWeight: "bold", marginBottom: 10 }}>Stock</Text>
           </View>
 
           <View>
-            <TextInput 
-              editable 
+            <TextInput
+              editable
               value={stock}
-              style={inputStyles.input} 
-              onChangeText={setStock}/>
+              style={inputStyles.input}
+              onChangeText={setStock}
+            />
           </View>
         </View>
 
+        <View
+          style={{
+            marginTop: 30,
+            marginBottom: 30,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <TouchableOpacity
+            style={buttonStyles.grayGreenButton}
+            onPress={() => handleCancel()}
+          >
+            <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
 
-        <View style={{ marginTop: 30, marginBottom: 30, flexDirection: 'row', justifyContent: 'space-between' }}>
-          <TouchableOpacity style={buttonStyles.grayGreenButton} onPress={() => handleCancel()}>
-              <Text style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}>
-                  Cancel
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={buttonStyles.grayPinkButton}  onPress={() => handleNext()}>
-              <Text style={{color: 'white', fontSize: 15, fontWeight: 'bold'}}>
-                  Next
-              </Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={buttonStyles.grayPinkButton}
+            onPress={() => handleNext()}
+          >
+            <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>
+              Next
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

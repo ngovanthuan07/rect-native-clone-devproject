@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
@@ -12,18 +12,37 @@ import inputStyles from './../../../styles/inputStyles';
 import { addToCart } from "../../../services/cart";
 import { useDispatch } from "react-redux";
 import { loadCartDetail } from "../../../redux/actions/cart";
+import { showProductById } from "../../../services/product";
 
 
 const { height, width } = Dimensions.get("window");
 export default function ProductSearchDetail({route}) {
-  const post = route.params.data
+  const productId = route.params.data
+  console.log(productId)
+  const [product, setProduct] = useState(null)
+
+  useEffect(() => {
+    showProductById(productId)
+      .then((response) => {
+        if(response?.data?.success) {
+          setProduct(response.data.product)
+          console.log(product)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation()
   const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
 
   const handlePlus = () => {
-    if(quantity === post.quantity) {
-      setQuantity(post.quantity)
+    if(quantity === product.quantity) {
+      setQuantity(product.quantity)
     } else {
       setQuantity(quantity + 1)
     }
@@ -38,8 +57,9 @@ export default function ProductSearchDetail({route}) {
   };
   
   const handleAddToCart = async () => {
-    const postId = post.id;
-    const response = await addToCart(postId, quantity)
+    setLoading(true)
+    
+    const response = await addToCart(product.id, quantity)
 
     if(response?.data) {
       if(response.data.message && response.data.status === false) {
@@ -70,6 +90,7 @@ export default function ProductSearchDetail({route}) {
     }
 
     dispatch(loadCartDetail())
+    setLoading(false)
 
   }
 
@@ -82,6 +103,10 @@ export default function ProductSearchDetail({route}) {
         marginTop: 30,
       }}
     >
+      <Spinner
+          visible={loading}
+          textStyle={{color: '#FFF',}}
+      />
       <Header001
         css={{
           heightContainer: "60px",
@@ -126,7 +151,7 @@ export default function ProductSearchDetail({route}) {
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
             }}
-            source={{ uri: post.assets[0].uri ? post.assets[0].uri : null }}
+            source={{ uri: product?.image ? product.image  : null }}
           />
         </View>
         
@@ -145,9 +170,9 @@ export default function ProductSearchDetail({route}) {
         >
           <View style={{ flex: 2 }}>
             <Text style={{ color: "white", fontWeight: "bold" }}>
-              {post.currency} {post.pricing}
+              {product?.currency} {product?.pricing}
             </Text>
-            <Text style={{ color: "white" }}>{post.name}</Text>
+            <Text style={{ color: "white" }}>{product?.name}</Text>
           </View>
 
           <View
@@ -182,7 +207,7 @@ export default function ProductSearchDetail({route}) {
               Detail
             </Text>
           </View>
-          <TextInput style={inputStyles.input} value={post.name} editable={false}/>
+          <TextInput style={inputStyles.input} value={product?.name} editable={false}/>
         </View>
         <View
           style={{

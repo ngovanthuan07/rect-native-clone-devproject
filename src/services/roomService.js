@@ -31,10 +31,22 @@ export const showRoomService = async (id) => {
 };
 export const inviteRoom = async (data) => {
   try {
-    const response = await axiosClient.post('inviteMember', data);
+    const response = await axiosClient.post('/inviteMember', data);
     
     return response?.data?.success ?? false;
   } catch (error) {
     return false;
+  }
+};
+
+export const showPostRoom = async (roomId) => {
+  try {
+    const response = await axiosClient.post('/showPostRoom', {
+      roomId: roomId
+    });
+    
+    return response?.data?.success ? response.data.posts : [];
+  } catch (error) {
+    return [];
   }
 };

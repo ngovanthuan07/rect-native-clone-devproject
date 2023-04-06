@@ -1,17 +1,19 @@
 
-import { DISPLAY_USER_POST } from "../constants";
+import { DISPLAY_USER_POST_PRODUCT } from "../constants";
 
 const initialState = {
     posts: [],
+    products: []
 }
 
 
-export const posts = (state = initialState, action) => {
+export const postAndProduct = (state = initialState, action) => {
     switch(action.type) {
-        case DISPLAY_USER_POST: {
+        case DISPLAY_USER_POST_PRODUCT: {
             return {
                 ...state,
                 posts: action.posts,
+                products: action.products
             }
         }
         default:

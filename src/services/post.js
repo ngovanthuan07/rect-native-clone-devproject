@@ -65,28 +65,14 @@ export const createPicAndVideoRoom = async (data) => {
 };
 
 export const addProduct = async (data) => {
-  let assets = [];
+  let image = '';
 
   try {
-    for (let item of data["assets"]) {
-      if (item["type"] === "image") {
-        assets.push({
-          uri: await saveMediaToStorage(item["uri"], "/images"),
-          type: item["type"],
-        });
-      } else {
-        if (item["type"] === "video") {
-          assets.push({
-            uri: await saveMediaToStorage(item["uri"], "/videos"),
-            type: item["type"],
-          });
-        }
-      }
-    }
+    image = await saveMediaToStorage(data["image"], "/images")
 
     const response = await axiosClient.post("/addProduct", {
       ...data,
-      assets,
+      image,
     });
     return response;
   } catch (error) {
@@ -162,6 +148,16 @@ export const displayUserPosts = async (data) => {
     return error;
   }
 };
+
+export const displayProduct = async (data) => {
+  try {
+    const response = await axiosClient.get("/display_user_posts_product");
+    return response?.data?.success ? response.data.posts : [];
+  } catch (error) {
+    return [];
+  }
+};
+
 
 
 export const searchPost = (searchable) => new Promise((resolve, reject) => {

@@ -2,11 +2,11 @@
   import axiosClient from "./axiosClient";
 
 
-export const addToCart = async (postId, quantity) => {
+export const addToCart = async (productId, quantity) => {
     try {
       const response = await axiosClient.get("/addToCart", {
         params: {
-          post_id: postId,
+          product_id: productId,
           quantity: quantity
         },
       });

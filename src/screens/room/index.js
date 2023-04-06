@@ -22,8 +22,8 @@ import { ListItem, Avatar } from "react-native-elements";
 import { loadRooms } from './../../redux/actions/room';
 
 export default function RoomScreen() {
-
-  const rooms = useSelector(state => state.room.rooms );
+  const loading = useSelector(state => state.spinner.loading)
+  const rooms = useSelector(state => state.room.rooms);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -37,7 +37,7 @@ export default function RoomScreen() {
 
   useEffect(() => {
     dispatch(loadRooms())
-  }, [])
+  }, [loading])
 
   const chooseImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -140,6 +140,7 @@ export default function RoomScreen() {
             <ListItem.Content>
               <ListItem.Title>{l?.name}</ListItem.Title>
               <ListItem.Subtitle>member: {l?.count}</ListItem.Subtitle>
+              <ListItem.Subtitle>room id: {l?.id}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         ))}

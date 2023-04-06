@@ -3,21 +3,44 @@ import React from "react";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const { height, width } = Dimensions.get("window");
 export default function SearchItem({ item }) {
-  
   
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
   const handleNavigation = () => {
     if(item.choose === 'PRODUCT') {
-      navigation.navigate('productSearchDetail', {data: item})
-
+      navigation.navigate('productSearchDetail', {data: item.id})
     } else {
-      navigation.navigate('homeSliderScreen', {data: item})
+      if(item?.choose === 'POST') {
+        navigation.navigate('homeSliderScreen', {data: item})
+      } else {
+
+      }
     }
+  }
+  
+  const myImage = () => {
+    if (item?.choose === 'POST') {
+      return item.assets[0]?.uri ? item.assets[0].uri : null
+    } 
+    if(item?.choose === 'PRODUCT') {
+      return item?.image ? item.image : null
+    }  
+    return item?.avatar ? item.avatar : null
+  }
+
+  const checkChoose = () => {
+    if (item?.choose === 'POST') {
+      return 0
+    } 
+    if(item?.choose === 'PRODUCT') {
+      return 1
+    }  
+    return 2
   }
 
 
@@ -44,7 +67,7 @@ export default function SearchItem({ item }) {
           alignContent: "center",
           alignItems: "center",
         }}
-        source={{ uri: item.assets[0]?.uri ?? null }}
+        source={{ uri: myImage()}}
       />
       <Text
         style={{

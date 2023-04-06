@@ -3,24 +3,34 @@ import { View, Text, TextInput, FlatList } from "react-native";
 import Header001 from "./../../components/common/header_0001/index";
 import styles from "./styles";
 import debounce from "lodash.debounce";
-import { searchPost } from "../../services/post";
+import { mSearchable } from "../../services/search";
 import SearchItem from "./item";
 import { SafeAreaView } from "react-native-safe-area-context";
+import uuid from 'react-native-uuid';
 
 export default function Search() {
   const [textInput, setTextInput] = useState("");
-  const [searchPosts, setSearchPosts] = useState([]);
+  const [result, setResult] = useState([]);
 
   useEffect(() => {
     const delayedQuery = debounce(() => {
-      searchPost(textInput)
+      mSearchable(textInput)
         .then((response) => {
           let posts = response.data.posts;
-          setSearchPosts(posts);
+          let products = response.data.products;
+          let users = response.data.users;
+          setResult(prev => {
+            return [].concat(products, posts, users)
+          });
+
+          console.log(products[0])
+          
         })
         .catch((err) => {
           console.log(err);
-          setSearchPosts([]);
+          setResult(prev => {
+            return []
+          });
         });
     }, 500);
 
@@ -54,9 +64,9 @@ export default function Search() {
       <SafeAreaView>
         <FlatList
           numColumns={2}
-          data={searchPosts}
+          data={result}
           renderItem={({ item }) => <SearchItem item={item} />}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => uuid.v4()}
           contentContainerStyle={{
             paddingLeft: '10%'
           }}

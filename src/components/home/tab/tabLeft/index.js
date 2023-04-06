@@ -7,9 +7,7 @@ import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
 
 export default function TabLeft() {
-  const posts = useSelector(state => state.posts.posts)
-
-
+  const posts = useSelector(state => state.postAndProduct.posts)
   
   return (
     <View style={styles.container}>

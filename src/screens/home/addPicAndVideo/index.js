@@ -53,6 +53,7 @@ export default function AddPictureAndVideoScreen() {
       name: name,
       category: category,
       watch: watch,
+      choose: 'POST'
     })
     setLoading(false)
 

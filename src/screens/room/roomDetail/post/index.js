@@ -1,20 +1,24 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import uuid from 'react-native-uuid';
+import { useNavigation } from '@react-navigation/native';
 
 export default function PostItem({item}) {
+  const navigation = useNavigation()
+
   return (
-    <View style={styles.container} key={uuid.v4()}>
-       <Image style={styles.image} source={{uri: null}}/>
-       <Text>{"name"}</Text>
-    </View>
+    <TouchableOpacity style={styles.container} key={uuid.v4()} 
+      onPress={() => navigation.navigate('homeSliderScreen', {data: item})}
+    >
+       <Image style={styles.image} source={{uri: item.assets[0].uri ?? null}}/>
+       <Text>{item?.name}</Text>
+    </TouchableOpacity>
   )
 }
 
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
       marginRight: 10

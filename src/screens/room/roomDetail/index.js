@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
-import { showRoomService } from "../../../services/roomService";
+import { showPostRoom, showRoomService } from "../../../services/roomService";
 import { useDispatch, useSelector } from "react-redux";
 import { loadRoomById } from "../../../redux/actions/room";
 import Header001 from "./../../../components/common/header_0001/index";
@@ -22,8 +22,12 @@ import { useNavigation } from "@react-navigation/native";
 import buttonStyles from "../../../styles/buttonStyles";
 import MemberItem from "./memberItem";
 import PostItem from './post/index';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 export default function RoomDetail({ route }) {
   let room = useSelector((state) => state.room.room);
+  let [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation()
 
@@ -32,11 +36,20 @@ export default function RoomDetail({ route }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadRoomById(route.params.data));
+    (async () => {
+      setLoading(true)
+      dispatch(await loadRoomById(route.params.data));
+      setPosts(await showPostRoom(room.id))
+      setLoading(false)
+    })()
   }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 30 }}>
+      <Spinner
+          visible={loading}
+          textStyle={{color: '#FFF',}}
+    />
       <Modal
         animationType="slide"
         transparent={true}
@@ -112,7 +125,7 @@ export default function RoomDetail({ route }) {
     <SafeAreaView style={{marginTop: 10, flex: 1}}>
       <FlatList
         numColumns={3}
-        data={[1,2,3,4,5,6,7,8,9]}
+        data={posts}
         renderItem={({item}) => <PostItem item={item} />}
         keyExtractor={item => item.id}
         contentContainerStyle={{

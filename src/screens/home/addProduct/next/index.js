@@ -121,7 +121,7 @@ export default function AddProductNext({ route }) {
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
             }}
-            source={{ uri: item.assets[0].uri ? item.assets[0].uri : null }}
+            source={{ uri: item?.image ? item.image : null }}
           />
         </View>
         <View

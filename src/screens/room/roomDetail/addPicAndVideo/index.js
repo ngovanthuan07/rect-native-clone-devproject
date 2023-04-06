@@ -47,6 +47,7 @@ export default function AddPictureAndVideoRoomScreen({route}) {
       assets: assets,
       name: name,
       watch: "ROOM",
+      choose: "POST",
       roomId: roomId
     })
     setLoading(false)

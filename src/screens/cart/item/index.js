@@ -7,16 +7,16 @@ import { loadCartDetail } from './../../../redux/actions/cart';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function CartItem({ item }) {
-  const post = item.post;
+  const product = item.product;
   const [loading, setLoading] = useState(false);
 
 
   const dispatch = useDispatch()
 
   const handlePlus = async () => {
-    const postId = post.id;
+    const productId = product.id;
     setLoading(true)
-    const response = await addToCart(postId, 1)
+    const response = await addToCart(productId, 1)
     setLoading(false)
 
     if(response?.data) {
@@ -52,9 +52,9 @@ export default function CartItem({ item }) {
 
   
   const handleMinus = async () => {
-    const postId = post.id;
+    const productId = product.id;
     setLoading(true)
-    const response = await addToCart(postId, -1)
+    const response = await addToCart(productId, -1)
     setLoading(false)
 
     if(response?.data) {
@@ -116,7 +116,7 @@ export default function CartItem({ item }) {
             backgroundColor: "#f2f2f2",
             borderRadius: 5,
           }}
-          source={{ uri: post?.assets[0]?.uri }}
+          source={{ uri: product?.image }}
         />
       </View>
       <View
@@ -124,9 +124,9 @@ export default function CartItem({ item }) {
           flex: 1,
         }}
       >
-        <Text>{post?.name}</Text>
+        <Text>{product?.name}</Text>
         <Text>
-          {post?.currency} {post?.pricing}
+          {product?.currency} {product?.pricing}
         </Text>
       </View>
       <View
