@@ -19,6 +19,7 @@ import Cart from '../../screens/cart'
 import RoomDetail from '../../screens/room/roomDetail'
 import AddPictureAndVideoRoomScreen from '../../screens/room/roomDetail/addPicAndVideo'
 import AddMember from '../../screens/member'
+import Order from '../../screens/order'
 
 const Stack = createNativeStackNavigator()
 
@@ -56,6 +57,8 @@ export default function Route() {
             <Stack.Screen name="roomDetail" component={RoomDetail} options={{ headerShown: false }} />
             <Stack.Screen name="roomDetailAddPictureAndVideo" component={AddPictureAndVideoRoomScreen} options={{ headerShown: false }} />
             <Stack.Screen name="addMember" component={AddMember} options={{ headerShown: false }} />
+            <Stack.Screen name="order" component={Order} options={{ headerShown: false }} />
+
           </>
        }
         </Stack.Navigator>

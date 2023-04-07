@@ -10,6 +10,13 @@ const inputStyles = StyleSheet.create({
         borderRadius: 5,
         borderColor: 'gray'
     },
+    inputTwo: {
+        height: 40,
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 5,
+        borderColor: '#bdc3c7',
+    },
     viewPicker: {
         borderRadius: 10,
         borderColor: 'gray',

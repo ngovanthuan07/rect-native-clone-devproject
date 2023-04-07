@@ -10,12 +10,15 @@ import HiddenItemWidthActions from "./hiddenItem";
 import { removeCart } from "../../services/cart";
 import { loadCartDetail } from "../../redux/actions/cart";
 import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Cart() {
   const cartDetails = useSelector((state) => state.cart.cartDetails);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const navigation = useNavigation()
 
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
@@ -126,9 +129,11 @@ export default function Cart() {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#ED4C67",
-        }}>
+        }}
+          onPress={() => navigation.navigate('order', {data: total()})}
+        >
           <Text style={{color: 'white', fontWeight: "bold"}}>
-            PAYMENT
+            CHECKOUT
           </Text>
         </TouchableOpacity>
       </View>
