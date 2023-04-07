@@ -8,12 +8,14 @@ export const userAuthStateListener = () => async (dispatch) => {
         const response = await axiosClient.get('/me');
         if (response.data.user != null && response.status === 200) {
             const user = response.data.user
+            
             await AsyncStorage.setItem('USER', JSON.stringify(response.data.user));
             console.info('USER AUTH STATE SUCCESSFUL');
             
             dispatch({
                 type: USER_STATE_CHANGE,
                 currentUser: user,
+                isSeller: user['seller'].length > 0 ? true : false,
                 loaded: true
             })  
 
@@ -25,6 +27,7 @@ export const userAuthStateListener = () => async (dispatch) => {
             dispatch({
                 type: USER_STATE_CHANGE,
                 currentUser: null,
+                isSeller: false,
                 loaded: true
             })
         }
@@ -35,6 +38,7 @@ export const userAuthStateListener = () => async (dispatch) => {
         dispatch({
             type: USER_STATE_CHANGE,
             currentUser: null,
+            isSeller: false,
             loaded: true
         });
     }

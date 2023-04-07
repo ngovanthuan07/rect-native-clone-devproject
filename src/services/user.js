@@ -104,3 +104,13 @@ export const getMe = async () => {
     return null
   }
 };
+
+export const signUpSellerService = async (data) => {
+  try {
+    const response = await axiosClient.post("/signUpSeller", data);
+    return response?.data?.success ? true : false;
+  } catch (error) {
+    console.log(error)
+    return false;
+  }
+};

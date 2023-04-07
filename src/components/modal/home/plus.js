@@ -1,31 +1,41 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
-import styled from 'styled-components'
-import { Feather } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
-import { clearModal } from './../../../redux/actions/modal';
-import { useNavigation } from '@react-navigation/native';
-export default function Plus({onClose}) {
-  const dispatch = useDispatch()
+import { View, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import styled from "styled-components";
+import { Feather } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { clearModal } from "./../../../redux/actions/modal";
+import { useNavigation } from "@react-navigation/native";
+export default function Plus({ onClose }) {
+  const isSeller = useSelector((state) => state.auth.isSeller);
 
-  const navigation = useNavigation()
+  const dispatch = useDispatch();
+
+  const navigation = useNavigation();
 
   const handleNavigation = (nav) => {
-    onClose()
-    navigation.navigate(nav)
-  }
-
+    onClose();
+    navigation.navigate(nav);
+  };
 
   return (
     <ViewContainer>
       <OptionContainer>
-        <Text style={{
+        <Text
+          style={{
             paddingLeft: 16,
-            fontWeight: 'bold',
+            fontWeight: "bold",
             fontSize: 16,
           }}
-        >Options</Text>
-        <Feather name="x" size={25} color="black" style={{paddingRight: 10}} onPress={() => onClose()}/>
+        >
+          Options
+        </Text>
+        <Feather
+          name="x"
+          size={25}
+          color="black"
+          style={{ paddingRight: 10 }}
+          onPress={() => onClose()}
+        />
       </OptionContainer>
       <ViewButton>
         <Button onPress={() => handleNavigation("addPictureAndVideo")}>
@@ -34,20 +44,24 @@ export default function Plus({onClose}) {
         <Button>
           <Text>Add Livestream</Text>
         </Button>
-        <Button>
-          <Text>Choose Products</Text>
-        </Button>
-        <Button  onPress={() => handleNavigation("addProduct")}>
-          <Text>Add Product</Text>
-        </Button>
+        {isSeller ? (
+          <>
+            <Button>
+              <Text>Choose Products</Text>
+            </Button>
+            <Button onPress={() => handleNavigation("addProduct")}>
+              <Text>Add Product</Text>
+            </Button>
+          </>
+        ) : null}
       </ViewButton>
     </ViewContainer>
-  )
+  );
 }
 
 const ViewContainer = styled(View)`
   flex: 1;
-`
+`;
 
 const OptionContainer = styled(View)`
   height: 40px;
@@ -59,16 +73,15 @@ const OptionContainer = styled(View)`
   border-bottom-width: 1px;
   border-bottom-color: gray;
   border-bottom-style: solid;
-`
-
+`;
 
 const ViewButton = styled(View)`
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 const Button = styled(TouchableOpacity)`
   display: flex;
   margin: 10px 10px 10px 10px;
-`
+`;

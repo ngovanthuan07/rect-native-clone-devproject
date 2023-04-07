@@ -64,6 +64,15 @@ export default function ContentDetail() {
           <ListItem.Chevron />
         </ListItem>
 
+        <ListItem bottomDivider onPress={() => navigation.navigate('sellerSignUp')}>
+          <Icon name="ios-business" type="ionicon"/>
+          <ListItem.Content>
+            <ListItem.Title>Start Seller</ListItem.Title>
+          </ListItem.Content>
+          <ListItem.Chevron />
+        </ListItem>
+        
+
         <ListItem bottomDivider onPress={() => handleLogOut()}>
           <Icon name="logout"/>
           <ListItem.Content>

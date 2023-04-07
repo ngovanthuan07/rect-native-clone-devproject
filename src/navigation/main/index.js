@@ -20,6 +20,7 @@ import RoomDetail from '../../screens/room/roomDetail'
 import AddPictureAndVideoRoomScreen from '../../screens/room/roomDetail/addPicAndVideo'
 import AddMember from '../../screens/member'
 import Order from '../../screens/order'
+import SellerSignUp from '../../screens/account/signup_seller'
 
 const Stack = createNativeStackNavigator()
 
@@ -47,6 +48,7 @@ export default function Route() {
           <>
             <Stack.Screen name="home" component={HomeNavigation} options={{ headerShown: false }} />
             <Stack.Screen name="editProfile" component={ProfileScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="sellerSignUp" component={SellerSignUp} options={{ headerShown: false }} />
             <Stack.Screen name="addPictureAndVideo" component={AddPictureAndVideoScreen} options={{ headerShown: false }} />
             <Stack.Screen name="videoTest" component={CustomVideoPlayer} options={{ headerShown: false }} />
             <Stack.Screen name="homeSliderScreen" component={HomeSliderScreen} options={{ headerShown: false }} />

@@ -45,6 +45,11 @@ const buttonStyles = StyleSheet.create({
         color: 'black',
         fontWeight: '700'
     },
+    text: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 13
+    },
 });
 
 export default buttonStyles;
