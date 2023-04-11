@@ -39,8 +39,8 @@ export default function RoomDetail({ route }) {
     (async () => {
       setLoading(true)
       dispatch(await loadRoomById(route.params.data));
-      setPosts(await showPostRoom(room.id))
       setLoading(false)
+      setPosts(await showPostRoom(room.id))
     })()
   }, []);
 
